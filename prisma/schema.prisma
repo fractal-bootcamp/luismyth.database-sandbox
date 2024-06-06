@@ -13,27 +13,94 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Movies in the database
 
-model Movie {
-  id String  @id @default(cuid())
-  title String  @unique
-  description String?
-  releaseDate DateTime
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
-// Foreign keys
-  directorId  String
+// Spec for tables starts here
+
+model Author {
+  id        String    @id @default(cuid())
+  name      String
+  biography String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // Relationship info for Prisma client - NOT database columns
+  books     Book[]
+
+  @@map("author")
+}
+
+model Book {
+  id        String    @id @default(cuid())
+  title     String
+  isbn      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // Columns that can be used to store Relationship key
+  authorId  String
+  borrowerId  String?
+
+  // Relationship info for Prisma client - NOT database columns
+  author    Author  @relation(fields: [authorId], references: [id])
+  borrower  Member?  @relation(fields: [borrowerId], references: [id])
+
+  // Many-to-many relationships - Prisma quietly makes other tables for these I think
+  genres Genre[]
+
+  // This is also an option, more than just id...
+  // authorBio String
+  // author    Author  @relation(fields: [authorBio], references: [biography])
+
+
+
+  @@map("book")
+}
+
+model Genre {
+  id        String    @id @default(cuid())
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // Many-to-many relationships - Prisma quietly makes other tables for these I think
+  books     Book[]
+
+  // old code...
+  // // Column that can be used to store Relationship key
+  // bookId    String?
+  // Book      Book?     @relation(fields: [bookId], references: [id])
+  
+  @@map("genre")
+}
+
+model Member {
+  id        String    @id @default(cuid())
+  name      String
+  email     String?
+  address   String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // Relationship info for Prisma client - NOT database columns
+  borrowedBooks     Book[]
+
+  @@map("member")
+}
+
+// NOTES AND NOISE
+
+// Relationships between the entities should meet the following requirements
+// Books can have many genres
+// Members can rent many books at a time
+// Authors can author many books
+
+// // Foreign keys
+//   directorId  String
 
 // Relationship
-  // director  Director @relation(fields: [directorId], references:[id])
+// director  Director @relation(fields: [directorId], references:[id])
 
-}
-
-model Director {
-  id  String @id @default(cuid())
-  name  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
+// Good options for id field...pick one and stick to it for a project
+//   id        String    @id @default(cuid())
+//   id    Int    @id @default(autoincrement())
