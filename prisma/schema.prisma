@@ -39,9 +39,11 @@ model Book {
 
   // Columns that can be used to store Relationship key
   authorId  String
+  borrowerId  String?
 
   // Relationship info for Prisma client - NOT database columns
   author    Author  @relation(fields: [authorId], references: [id])
+  borrower  Member?  @relation(fields: [borrowerId], references: [id])
 
   // authorBio String
   // author    Author  @relation(fields: [authorBio], references: [biography])
@@ -74,6 +76,9 @@ model Member {
   address   String?
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
+
+  // Relationship info for Prisma client - NOT database columns
+  borrowedBooks     Book[]
 
   @@map("member")
 }
