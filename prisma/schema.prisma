@@ -13,22 +13,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Movies in the database
 
-model Book {
-  id        String    @id @default(cuid())
-  title     String
-  // author ???
-  // author Author
-  isbn      String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
 
-  // Relationship
-  genre Genre[]
-
-  @@map("book")
-}
+// Spec for tables starts here
 
 model Author {
   id        String    @id @default(cuid())
@@ -37,7 +24,32 @@ model Author {
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
 
+  // Relationship info for Prisma client - NOT database columns
+  books     Book[]
+
   @@map("author")
+}
+
+model Book {
+  id        String    @id @default(cuid())
+  title     String
+  isbn      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // Columns that can be used to store Relationship key
+  authorId  String
+
+  // Relationship info for Prisma client - NOT database columns
+  author    Author  @relation(fields: [authorId], references: [id])
+
+  // authorBio String
+  // author    Author  @relation(fields: [authorBio], references: [biography])
+
+
+  genre Genre[]
+
+  @@map("book")
 }
 
 model Genre {
@@ -78,3 +90,7 @@ model Member {
 
 // Relationship
 // director  Director @relation(fields: [directorId], references:[id])
+
+// Good options for id field...pick one and stick to it for a project
+//   id        String    @id @default(cuid())
+//   id    Int    @id @default(autoincrement())
