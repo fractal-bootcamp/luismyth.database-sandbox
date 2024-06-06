@@ -15,25 +15,52 @@ datasource db {
 
 // Movies in the database
 
-model Movie {
+model Book {
   id String  @id @default(cuid())
-  title String  @unique
-  description String?
-  releaseDate DateTime
+  title String
+  // author ???
+  isbn String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-// Foreign keys
-  directorId  String
-
-// Relationship
-  // director  Director @relation(fields: [directorId], references:[id])
-
 }
 
-model Director {
+
+model Author {
+  id String  @id @default(cuid())
+  name String
+  biography String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Genre {
   id  String @id @default(cuid())
   name  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+
+model Member {
+  id  String @id @default(cuid())
+  name  String
+  email  String?
+  address  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// NOTES AND NOISE
+
+// Book (ID, Title, Author, ISBN)
+// Author (ID, Name, Biography)
+// Genre (ID, Name)
+// Member (ID, Name, Email, Address)
+
+// // Foreign keys
+//   directorId  String
+
+// Relationship
+  // director  Director @relation(fields: [directorId], references:[id])
+
