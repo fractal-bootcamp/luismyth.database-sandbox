@@ -11,7 +11,7 @@ const prisma = new PrismaClient()
 // }
 
 async function main() {
-    console.log('the scrit is running')
+    console.log('the script is running')
 
     const allAuthors = await prisma.author.findMany()
     console.log(allAuthors)
