@@ -45,11 +45,14 @@ model Book {
   author    Author  @relation(fields: [authorId], references: [id])
   borrower  Member?  @relation(fields: [borrowerId], references: [id])
 
+  // Many-to-many relationships - Prisma quietly makes other tables for these I think
+  genres Genre[]
+
+  // This is also an option, more than just id...
   // authorBio String
   // author    Author  @relation(fields: [authorBio], references: [biography])
 
 
-  genre Genre[]
 
   @@map("book")
 }
@@ -60,12 +63,14 @@ model Genre {
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
 
-  // Column that can be used to store Relationship key
-  bookId    String?
-  
-  // Relationship info for Prisma client - NOT a database column
-  Book      Book?     @relation(fields: [bookId], references: [id])
+  // Many-to-many relationships - Prisma quietly makes other tables for these I think
+  books     Book[]
 
+  // old code...
+  // // Column that can be used to store Relationship key
+  // bookId    String?
+  // Book      Book?     @relation(fields: [bookId], references: [id])
+  
   @@map("genre")
 }
 
