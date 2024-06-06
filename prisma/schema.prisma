@@ -16,64 +16,65 @@ datasource db {
 // Movies in the database
 
 model Book {
-  id String  @id @default(cuid())
-  title String
+  id        String    @id @default(cuid())
+  title     String
   // author ???
-  isbn String
-  createdAt DateTime @default(now())
+  // author Author
+  isbn      String
+  createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
+
+  // Relationship
+  genre Genre[]
 
   @@map("book")
 }
 
-
 model Author {
-  id String  @id @default(cuid())
-  name String
+  id        String    @id @default(cuid())
+  name      String
   biography String?
-  createdAt DateTime @default(now())
+  createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
 
   @@map("author")
 }
 
-
 model Genre {
-  id  String @id @default(cuid())
-  name  String
-  createdAt DateTime @default(now())
+  id        String    @id @default(cuid())
+  name      String
+  createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
+
+  // Column that can be used to store Relationship key
+  bookId    String?
+  
+  // Relationship info for Prisma client - NOT a database column
+  Book      Book?     @relation(fields: [bookId], references: [id])
 
   @@map("genre")
 }
 
-
 model Member {
-  id  String @id @default(cuid())
-  name  String
-  email  String?
-  address  String?
-  createdAt DateTime @default(now())
+  id        String    @id @default(cuid())
+  name      String
+  email     String?
+  address   String?
+  createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
 
   @@map("member")
 }
 
-
-
 // NOTES AND NOISE
-
 
 // Relationships between the entities should meet the following requirements
 // Books can have many genres
 // Members can rent many books at a time
 // Authors can author many books
 
-
-
 // // Foreign keys
 //   directorId  String
 
 // Relationship
-  // director  Director @relation(fields: [directorId], references:[id])
-
+// director  Director @relation(fields: [directorId], references:[id])
