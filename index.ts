@@ -1,7 +1,7 @@
-// import { PrismaClient } from "@prisma/client"
+import { PrismaClient } from "@prisma/client"
 // for some reason defining a required input works but import does not...
 
-const { PrismaClient } = require("@prisma/client");
+// const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient()
 

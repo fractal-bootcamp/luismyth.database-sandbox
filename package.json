@@ -6,5 +6,9 @@
   },
   "devDependencies": {
     "prisma": "^5.15.0"
+  },
+  "scripts": {
+    "generate:db1": "prisma migrate dev --schema=./prisma/schema.prisma",
+    "generate:db2": "prisma migrate dev --schema=./prisma_database2/schema.prisma"
   }
 }

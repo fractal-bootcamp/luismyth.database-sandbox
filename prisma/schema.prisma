@@ -53,7 +53,6 @@ model Book {
   // author    Author  @relation(fields: [authorBio], references: [biography])
 
 
-
   @@map("book")
 }
 
@@ -88,19 +87,3 @@ model Member {
   @@map("member")
 }
 
-// NOTES AND NOISE
-
-// Relationships between the entities should meet the following requirements
-// Books can have many genres
-// Members can rent many books at a time
-// Authors can author many books
-
-// // Foreign keys
-//   directorId  String
-
-// Relationship
-// director  Director @relation(fields: [directorId], references:[id])
-
-// Good options for id field...pick one and stick to it for a project
-//   id        String    @id @default(cuid())
-//   id    Int    @id @default(autoincrement())
