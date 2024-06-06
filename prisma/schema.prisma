@@ -10,5 +10,30 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("postgresql://postgres:postgres@localhost:10002")
+}
+
+// Movies in the database
+
+model Movie {
+  id String  @id @default(cuid())
+  title String  @unique
+  description String?
+  releaseDate DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+// Foreign keys
+  directorId  String
+
+// Relationship
+  // director  Director @relation(fields: [directorId], references:[id])
+
+}
+
+model Director {
+  id  String @id @default(cuid())
+  name  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
