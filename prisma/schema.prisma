@@ -21,7 +21,9 @@ model Book {
   // author ???
   isbn String
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime? @updatedAt
+
+  @@map("book")
 }
 
 
@@ -30,7 +32,9 @@ model Author {
   name String
   biography String?
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime? @updatedAt
+
+  @@map("author")
 }
 
 
@@ -38,7 +42,9 @@ model Genre {
   id  String @id @default(cuid())
   name  String
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime? @updatedAt
+
+  @@map("genre")
 }
 
 
@@ -48,15 +54,22 @@ model Member {
   email  String?
   address  String?
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime? @updatedAt
+
+  @@map("member")
 }
+
+
 
 // NOTES AND NOISE
 
-// Book (ID, Title, Author, ISBN)
-// Author (ID, Name, Biography)
-// Genre (ID, Name)
-// Member (ID, Name, Email, Address)
+
+// Relationships between the entities should meet the following requirements
+// Books can have many genres
+// Members can rent many books at a time
+// Authors can author many books
+
+
 
 // // Foreign keys
 //   directorId  String
